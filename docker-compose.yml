@@ -1,0 +1,78 @@
+services:
+
+  #Node 1
+  re1:
+    image: redislabs/redis:latest
+    container_name: re1
+    restart: unless-stopped
+    tty: true
+    cap_add: 
+      - sys_resource
+    ports:
+      - "18443:8443"
+      - "12000:12000"
+      - "13000:13000"
+      - "19443:9443"
+    profiles: ["redis"]
+    networks:
+      app_net:
+        ipv4_address: 192.168.20.2
+
+  #Node 2
+  re2:
+    image: redislabs/redis:latest
+    container_name: re2
+    restart: unless-stopped
+    tty: true
+    cap_add: 
+      - sys_resource
+    ports:
+      - "18444:8443"
+      - "12001:12000"
+      - "13001:13000"
+      - "19444:9443"
+    profiles: ["redis"]
+    networks:
+      app_net:
+        ipv4_address: 192.168.20.3
+
+  #Node 3
+  re3:
+    image: redislabs/redis:latest
+    container_name: re3
+    restart: unless-stopped
+    tty: true
+    cap_add: 
+      - sys_resource
+    ports:
+      - "18445:8443"
+      - "12002:12000"
+      - "13002:13000"
+      - "19445:9443"
+    profiles: ["redis"]
+    networks:
+      app_net:
+        ipv4_address: 192.168.20.4
+  
+  #Expressjs REST API Server
+  app:
+    build: .
+    environment:
+      REDIS_URL: redis://default:redis@re1:12000
+      APP_PORT: 8000
+    ports:
+      - 8000:8000
+    profiles: ["app"]
+    networks:
+      app_net:
+        ipv4_address: 192.168.20.5
+
+#Docker Networks
+networks:
+  app_net:
+    name: re_network
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.20.0/24

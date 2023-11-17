@@ -1,0 +1,18 @@
+{
+    "name": "db1",
+    "type": "redis",
+    "memory_size": 100000000,
+    "port": 12000,
+    "authentication_redis_pass": "redis",
+    "proxy_policy": "all-master-shards",
+    "sharding": true,
+    "shards_count": 2,
+    "shards_placement": "sparse",
+    "shard_key_regex": [{"regex": ".*\\{(?<tag>.*)\\}.*"}, {"regex": "(?<tag>.*)"}],
+    "replication": false,
+    "oss_cluster": false, 
+    "module_list": [{
+        "module_name":"redisgears_2",
+        "module_args": ""
+    }]
+}

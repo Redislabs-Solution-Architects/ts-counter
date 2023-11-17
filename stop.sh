@@ -1,0 +1,1 @@
+docker compose --profile redis --profile app down

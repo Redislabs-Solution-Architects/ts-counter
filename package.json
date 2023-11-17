@@ -1,0 +1,23 @@
+{
+  "name": "interval-incr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/app.js",
+  "scripts": {
+    "deploy": "gears-api ./src/counter.js -r redis://default:redis@localhost:12000",
+    "app": "node ./src/app.js",
+    "sim": "node ./src/simulator.js"
+  },
+  "devDependencies": {
+    "@redis/gears-api": "https://gitpkg.now.sh/RedisGears/RedisGears/js_api"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "see LICENSE",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "express": "^4.18.2",
+    "redis": "^4.6.10"
+  },
+  "type": "module"
+}
